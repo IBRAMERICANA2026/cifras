@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Cifras</title>
+    <link rel="shortcut icon" href="../img/logo_branco.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="../img/logo.png" alt="IBR" class="logo">
+        </div>
+        <div class="header-right">
+            <button class="menu-hamburger" id="menuToggle" aria-label="Menu">&#9776;</button>
+            <nav class="menu-dropdown" id="menuDropdown">
+                <a href="../index.html">🏠 Início</a>
+                <a href="pesquisa.html">🔍 Pesquisar Cifras</a>
+                <a href="enviar.html">📤 Enviar Nova Cifra</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="titulo-principal titulo-pagina-pesquisa">🔍 Pesquisar Cifras</h1>
+
+        <div class="pagina-interna">
+            <form id="form-pesquisa" class="form-cifra">
+                <div class="search-bar-wrapper">
+                    <div class="campo-group">
+                        <label for="campo-busca">Filtrar por</label>
+                        <select id="campo-busca">
+                            <option value="nome">Nome da música</option>
+                            <option value="interprete">Intérprete</option>
+                            <option value="conteudo">Conteúdo</option>
+                        </select>
+                    </div>
+                    <div class="termo-group">
+                        <label for="termo-busca">Termo</label>
+                        <input type="text" id="termo-busca" placeholder="Digite sua pesquisa...">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-pesquisar">Pesquisar</button>
+                </div>
+            </form>
+
+            <div id="resultados" class="resultados-pesquisa"></div>
+        </div>
+    </main>
+
+    <footer>
+        <img src="../img/logo.png" alt="IBR" class="logo-footer">
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script src="../js/firebase.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/pesquisa.js"></script>
+
+</body>
+
+</html>

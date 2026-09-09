@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIFRAS</title>
+    <link rel="shortcut icon" href="./img/logo_branco.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="img/logo.png" alt="IBR" class="logo">
+        </div>
+        <div class="header-right">
+            <button class="menu-hamburger" id="menuToggle" aria-label="Menu">&#9776;</button>
+            <nav class="menu-dropdown" id="menuDropdown">
+                <a href="index.html">🏠 Início</a>
+                <a href="html/pesquisa.html">🔍 Pesquisar Cifras</a>
+                <a href="html/enviar.html">📤 Enviar Nova Cifra</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+
+        <h1 class="titulo-principal">IBR - CIFRAS</h1>
+
+        <div class="progress-wrapper">
+            <div class="progress-circle">
+                <div class="progress-inner">
+                    <span class="numero" id="contador-numero">0</span>
+                    <span class="rotulo">Cifras</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes-acoes">
+            <a href="html/pesquisa.html" class="btn btn-primary">PESQUISAR CIFRAS</a>
+            <a href="html/enviar.html" class="btn btn-primary">ENVIAR NOVA CIFRA</a>
+        </div>
+
+        <div class="indice-alfabetico" id="indice-alfabetico">
+            <span data-letra="A">A</span><span data-letra="B">B</span><span data-letra="C">C</span>
+            <span data-letra="D">D</span><span data-letra="E">E</span><span data-letra="F">F</span>
+            <span data-letra="G">G</span><span data-letra="H">H</span><span data-letra="I">I</span>
+            <span data-letra="J">J</span><span data-letra="K">K</span><span data-letra="L">L</span>
+            <span data-letra="M">M</span><span data-letra="N">N</span><span data-letra="O">O</span>
+            <span data-letra="P">P</span><span data-letra="Q">Q</span><span data-letra="R">R</span>
+            <span data-letra="S">S</span><span data-letra="T">T</span><span data-letra="U">U</span>
+            <span data-letra="V">V</span><span data-letra="W">W</span><span data-letra="X">X</span>
+            <span data-letra="Y">Y</span><span data-letra="Z">Z</span>
+        </div>
+
+        <div class="lista-cifras" id="lista-cifras">
+
+        </div>
+
+    </main>
+
+    <footer>
+        <img src="img/logo.png" alt="IBR" class="logo-footer">
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-conteudo">
+            <span class="fechar" id="modal-fechar">&times;</span>
+            <h3 id="modal-titulo"></h3>
+            <p><strong>Intérprete:</strong> <span id="modal-interprete"></span></p>
+            <div class="conteudo-completo" id="modal-conteudo"></div>
+            <div id="modal-pdf"></div>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+
+    <script src="js/firebase.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>
