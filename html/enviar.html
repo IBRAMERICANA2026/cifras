@@ -7,7 +7,6 @@
     <title>Enviar Cifra</title>
     <link rel="shortcut icon" href="../img/logo_branco.jpg" type="image/x-icon">
     <link rel="stylesheet" href="../css/estilo.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 </head>
 
 <body>
@@ -43,7 +42,7 @@
 
                 <label for="arquivo-pdf">Arquivo PDF (obrigatório)</label>
                 <input type="file" id="arquivo-pdf" accept=".pdf" required>
-                <div id="status-extração" class="status-extracao"></div>
+                <div id="status-extracao" class="status-extracao"></div>
 
                 <button type="button" id="btn-editar-conteudo" class="btn btn-outline btn-editar-conteudo">
                     ✏️ Editar conteúdo extraído
@@ -80,6 +79,7 @@
 
     <div class="toast" id="toast"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 

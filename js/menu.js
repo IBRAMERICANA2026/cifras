@@ -1,42 +1,87 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const menuDropdown = document.getElementById('menuDropdown');
+document.addEventListener("DOMContentLoaded", function () {
+  const menuToggle = document.getElementById("menuToggle");
+  const menuDropdown = document.getElementById("menuDropdown");
+  if (!menuToggle || !menuDropdown) return;
 
-    if (menuToggle && menuDropdown) {
-        // Alternar menu ao clicar no ícone
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            menuDropdown.classList.toggle('aberto');
-        });
+  if (menuToggle.dataset.menuInit === "1") return;
+  menuToggle.dataset.menuInit = "1";
 
-        // Fechar menu ao clicar em um link
-        menuDropdown.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function() {
-                menuDropdown.classList.remove('aberto');
-            });
-        });
+  const header = document.querySelector("header");
 
-        // Fechar menu ao clicar fora do cabeçalho
-        document.addEventListener('click', function(e) {
-            const header = document.querySelector('header');
-            if (header && !header.contains(e.target)) {
-                menuDropdown.classList.remove('aberto');
-            }
-        });
 
-        // ===== OCULTAR O LINK DA PÁGINA ATUAL =====
-        // Identifica o nome do arquivo atual (ex: index.html, pesquisa.html, enviar.html)
-        let currentFile = window.location.pathname.split('/').pop();
-        if (!currentFile || currentFile === '') {
-            currentFile = 'index.html'; // Página inicial
-        }
-
-        // Percorre todos os links do menu e oculta aquele que aponta para a página atual
-        menuDropdown.querySelectorAll('a').forEach(link => {
-            const linkFile = link.href.split('/').pop();
-            if (linkFile === currentFile) {
-                link.style.display = 'none';
-            }
-        });
+  function normalizarPath(path) {
+    if (!path) return "/index.html";
+    try {
+      path = decodeURIComponent(path);
+    } catch (_) {
     }
+    path = path.split("?")[0].split("#")[0];
+    if (path.endsWith("/")) path += "index.html";
+    return path.toLowerCase();
+  }
+
+  function pathDoLink(a) {
+    try {
+      return normalizarPath(new URL(a.href, location.href).pathname);
+    } catch (_) {
+      return normalizarPath(a.getAttribute("href") || "");
+    }
+  }
+
+  function fecharMenu() {
+    if (menuDropdown.classList.contains("aberto")) {
+      menuDropdown.classList.remove("aberto");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  menuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const abrindo = !menuDropdown.classList.contains("aberto");
+    menuDropdown.classList.toggle("aberto", abrindo);
+    menuToggle.setAttribute("aria-expanded", abrindo ? "true" : "false");
+  });
+
+  menuDropdown.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", fecharMenu);
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!menuDropdown.classList.contains("aberto")) return;
+    if (header && !header.contains(e.target)) fecharMenu();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") fecharMenu();
+  });
+
+  function aplicarEstadoAtual() {
+    const pathAtual = normalizarPath(location.pathname);
+    const pathAtualSemIndex = pathAtual.replace(/\/index\.html$/, "/");
+
+    menuDropdown.querySelectorAll("a").forEach((link) => {
+      const destino = pathDoLink(link);
+      const destinoSemIndex = destino.replace(/\/index\.html$/, "/");
+
+      const ehAtual =
+        destino === pathAtual ||
+        destinoSemIndex === pathAtualSemIndex;
+
+      if (ehAtual) {
+        link.style.display = "none";
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.style.display = "";
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  aplicarEstadoAtual();
+
+  
+  window.addEventListener("pageshow", function (e) {
+    fecharMenu();
+    aplicarEstadoAtual();
+  });
 });
