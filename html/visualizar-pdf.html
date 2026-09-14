@@ -11,47 +11,55 @@
 
 <body>
 
+    <!-- ========================================= -->
+    <!-- ===== CABEÇALHO (INFO + NAV + AÇÕES) ===== -->
+    <!-- ========================================= -->
     <header class="pdf-header">
+        <!-- Informações da cifra -->
         <div class="pdf-info">
             <h1 id="nome-cifra">Carregando...</h1>
             <p id="interprete-cifra"></p>
         </div>
+
+        <!-- Navegação (páginas + zoom) — movida para dentro do header -->
+        <nav class="pdf-nav" id="pdf-nav" style="display:none;">
+            <div class="pdf-nav-group">
+                <button type="button" class="pdf-btn" id="btn-prev" title="Página anterior (←)">
+                    ◀
+                </button>
+                <span class="pdf-page-info">
+                    Página <strong id="page-num">1</strong> de <strong id="page-count">?</strong>
+                </span>
+                <button type="button" class="pdf-btn" id="btn-next" title="Próxima página (→)">
+                    ▶
+                </button>
+            </div>
+
+            <div class="pdf-nav-group">
+                <button type="button" class="pdf-btn" id="btn-zoom-out" title="Diminuir zoom (−)">−</button>
+                <span class="pdf-page-info" id="zoom-label" style="min-width:60px;">100%</span>
+                <button type="button" class="pdf-btn" id="btn-zoom-in" title="Aumentar zoom (+)">+</button>
+                <button type="button" class="pdf-btn" id="btn-fit" title="Ajustar à largura">⇔</button>
+            </div>
+        </nav>
+
+        <!-- Ações -->
         <div class="pdf-actions">
             <button type="button" class="pdf-btn" id="btn-download" title="Baixar PDF">
-                📄 Baixar
+                📄
             </button>
             <button type="button" class="pdf-btn" id="btn-print" title="Imprimir">
-                🖨️ Imprimir
+                🖨️
             </button>
-            <button type="button" class="pdf-btn" id="btn-close" title="Fechar">
+            <button type="button" class="pdf-btn" id="btn-close" title="Fechar (Esc)">
                 ✕
             </button>
         </div>
     </header>
 
-    <nav class="pdf-nav" id="pdf-nav" style="display:none;">
-        <div class="pdf-nav-group">
-            <button type="button" class="pdf-btn" id="btn-prev" title="Página anterior">
-                ◀
-            </button>
-            <span class="pdf-page-info">
-                Página <strong id="page-num">1</strong> de <strong id="page-count">?</strong>
-            </span>
-            <button type="button" class="pdf-btn" id="btn-next" title="Próxima página">
-                ▶
-            </button>
-        </div>
-
-        <div class="pdf-nav-group">
-            <button type="button" class="pdf-btn" id="btn-zoom-out" title="Diminuir zoom">−</button>
-            <span class="pdf-page-info" id="zoom-label" style="min-width:60px;">100%</span>
-            <button type="button" class="pdf-btn" id="btn-zoom-in" title="Aumentar zoom">+</button>
-            <button type="button" class="pdf-btn" id="btn-fit" title="Ajustar à largura">
-                ⇔
-            </button>
-        </div>
-    </nav>
-
+    <!-- ========================================= -->
+    <!-- ===== VISUALIZADOR ===== -->
+    <!-- ========================================= -->
     <div class="pdf-viewer" id="pdf-viewer">
         <div class="pdf-estado" id="pdf-estado">
             <div class="spinner"></div>
@@ -60,6 +68,9 @@
         <canvas id="pdf-canvas" style="display:none;"></canvas>
     </div>
 
+    <!-- ========================================= -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ========================================= -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
