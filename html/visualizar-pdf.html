@@ -11,55 +11,53 @@
 
 <body>
 
-    <!-- ========================================= -->
-    <!-- ===== CABEÇALHO (INFO + NAV + AÇÕES) ===== -->
-    <!-- ========================================= -->
+
     <header class="pdf-header">
-        <!-- Informações da cifra -->
+
         <div class="pdf-info">
             <h1 id="nome-cifra">Carregando...</h1>
             <p id="interprete-cifra"></p>
         </div>
 
-        <!-- Navegação (páginas + zoom) — movida para dentro do header -->
-        <nav class="pdf-nav" id="pdf-nav" style="display:none;">
-            <div class="pdf-nav-group">
-                <button type="button" class="pdf-btn" id="btn-prev" title="Página anterior (←)">
-                    ◀
-                </button>
-                <span class="pdf-page-info">
-                    Página <strong id="page-num">1</strong> de <strong id="page-count">?</strong>
-                </span>
-                <button type="button" class="pdf-btn" id="btn-next" title="Próxima página (→)">
-                    ▶
-                </button>
-            </div>
+        <div class="pdf-header-right">
 
-            <div class="pdf-nav-group">
+            <div class="pdf-zoom-group">
                 <button type="button" class="pdf-btn" id="btn-zoom-out" title="Diminuir zoom (−)">−</button>
-                <span class="pdf-page-info" id="zoom-label" style="min-width:60px;">100%</span>
+                <span class="pdf-zoom-badge" id="zoom-label">100%</span>
                 <button type="button" class="pdf-btn" id="btn-zoom-in" title="Aumentar zoom (+)">+</button>
-                <button type="button" class="pdf-btn" id="btn-fit" title="Ajustar à largura">⇔</button>
             </div>
-        </nav>
 
-        <!-- Ações -->
-        <div class="pdf-actions">
-            <button type="button" class="pdf-btn" id="btn-download" title="Baixar PDF">
-                📄
+            <button type="button" class="pdf-btn" id="btn-close" title="Fechar (Esc)">✕</button>
+
+            <button type="button" class="pdf-menu-toggle" id="btn-menu-toggle" aria-label="Menu" aria-expanded="false">
+                &#9776;
             </button>
-            <button type="button" class="pdf-btn" id="btn-print" title="Imprimir">
-                🖨️
-            </button>
-            <button type="button" class="pdf-btn" id="btn-close" title="Fechar (Esc)">
-                ✕
-            </button>
+
+        </div>
+
+        <div class="pdf-toolbar" id="pdf-toolbar">
+
+            <nav class="pdf-nav" id="pdf-nav" style="display:none;">
+                <div class="pdf-nav-group">
+                    <button type="button" class="pdf-btn" id="btn-prev" title="Página anterior (←)">◀</button>
+                    <span class="pdf-page-info">
+                        <strong id="page-num">1</strong>/<strong id="page-count">?</strong>
+                    </span>
+                    <button type="button" class="pdf-btn" id="btn-next" title="Próxima página (→)">▶</button>
+                </div>
+            </nav>
+
+            <div class="pdf-actions">
+                <button type="button" class="pdf-btn" id="btn-fit" title="Ajustar à largura">⇔</button>
+                <button type="button" class="pdf-btn" id="btn-download" title="Baixar PDF">📄</button>
+                <button type="button" class="pdf-btn" id="btn-print" title="Imprimir">🖨️</button>
+                <button type="button" class="pdf-btn" id="btn-close-desktop" title="Fechar (Esc)">✕</button>
+            </div>
+
         </div>
     </header>
 
-    <!-- ========================================= -->
-    <!-- ===== VISUALIZADOR ===== -->
-    <!-- ========================================= -->
+
     <div class="pdf-viewer" id="pdf-viewer">
         <div class="pdf-estado" id="pdf-estado">
             <div class="spinner"></div>
@@ -68,14 +66,54 @@
         <canvas id="pdf-canvas" style="display:none;"></canvas>
     </div>
 
-    <!-- ========================================= -->
-    <!-- ===== SCRIPTS ===== -->
-    <!-- ========================================= -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="../js/firebase.js"></script>
     <script src="../js/visualizar-pdf.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('btn-menu-toggle');
+            const bar = document.getElementById('pdf-toolbar');
+
+            if (btn && bar) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const aberto = bar.classList.toggle('aberto');
+                    btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+                    btn.innerHTML = aberto ? '&times;' : '&#9776;';
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (bar.classList.contains('aberto') &&
+                        !bar.contains(e.target) &&
+                        e.target !== btn) {
+                        bar.classList.remove('aberto');
+                        btn.setAttribute('aria-expanded', 'false');
+                        btn.innerHTML = '&#9776;';
+                    }
+                });
+
+                window.addEventListener('orientationchange', () => {
+                    bar.classList.remove('aberto');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.innerHTML = '&#9776;';
+                });
+            }
+
+            const fechar1 = document.getElementById('btn-close');
+            const fechar2 = document.getElementById('btn-close-desktop');
+            [fechar1, fechar2].forEach(b => {
+                if (!b) return;
+                b.addEventListener('click', () => {
+                    if (window.history.length > 1) window.history.back();
+                    else window.close();
+                });
+            });
+        });
+    </script>
 
 </body>
 
